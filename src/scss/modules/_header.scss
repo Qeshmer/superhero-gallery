@@ -1,0 +1,17 @@
+.header {
+    background-color: $mastricht-blue;
+    text-align: center;
+    height: 80px;
+    &-logo {
+        text-decoration: none;
+        line-height: 80px;
+        display: inline-block;
+        h1 {
+            margin: 0;
+            padding: 0;
+            color: $color-white;
+            font-size: 1.2em;
+
+        }
+    }
+}

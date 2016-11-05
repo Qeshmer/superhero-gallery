@@ -1,6 +1,11 @@
+//React
 import React from "react";
 import ReactDOM from "react-dom";
 
+//React components
+import Header from "./components/Header.js"; 
+
+//Styles
 import "./scss/main.scss";
 
 var Searchbar = React.createClass({
@@ -11,4 +16,4 @@ var Searchbar = React.createClass({
     }
 });
 
-ReactDOM.render(<Searchbar />, document.querySelector(".entry-point"));
+ReactDOM.render(<Header headerText="Superhero Gallery" />, document.querySelector(".site-wrapper"));
