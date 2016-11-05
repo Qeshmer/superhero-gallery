@@ -12,6 +12,10 @@ var webpackConfig = {
 				loader: "babel-loader",
                 exclude: "node_modules",
 				test: /\.js$/
+			},
+			{
+				loaders: ["style-loader", "css-loader", "sass-loader"],
+				test: /\.scss$/
 			}
 		]
 	},
