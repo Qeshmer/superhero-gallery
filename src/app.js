@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 var Searchbar = React.createClass({
     render : function() {
         return (
-            <h2>No</h2>
+            <h2>I think it works.</h2>
         );
     }
 });
