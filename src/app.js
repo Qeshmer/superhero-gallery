@@ -4,10 +4,20 @@ import ReactDOM from "react-dom";
 
 //React components
 import Header from "./components/Header.js"; 
-import Gallery from "./components/Gallery.js"; 
 
 //Styles
 import "./scss/main.scss";
+
+function Image(props) {
+
+    return (
+        <a className="image-link" href="#">
+            <div className="inner-wrapper">
+                <img src={props.url} alt="" />
+            </div>
+        </a>
+    );
+}
 
 var Application = React.createClass({
 
@@ -22,14 +32,16 @@ var Application = React.createClass({
 
         var xhr = new XMLHttpRequest();
         var flickrApiKey = "1020fa4e42882ee2e1a144a48e55499d";
-        var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&per_page=10&api_key=" + flickrApiKey + "&format=json&nojsoncallback=1";
+        var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.photos.search&tags=superhero&per_page=10&api_key=" + flickrApiKey + "&format=json&nojsoncallback=1";
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var data = JSON.parse(xhr.responseText)
-                console.dir(data);
+                var photoResult = data.photos.photo;
+
+                this.setState({ photos: photoResult });
             }
-        };
+        }.bind(this);
         xhr.open("GET", flickrAPI);
         xhr.send();
     },
@@ -38,9 +50,15 @@ var Application = React.createClass({
             <div className="site-wrapper">
                 <Header headerText="Superhero Gallery" />
                 <section className="block">
-                    <div className="grid-container">
-                        
-                    </div>
+                        <div className="image-gallery">
+                            <div className="grid-container">
+                                {this.state.photos.map(function(photo, index) {
+                                    return (
+                                        <Image url= {"https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg"} key={index} />                                    
+                                    );
+                                })}
+                            </div>
+                        </div>
                 </section>
             </div>
         );
