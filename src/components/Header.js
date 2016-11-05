@@ -4,7 +4,9 @@ import ReactDOM from "react-dom";
 function Header(props) {
     return (
         <div className="header">
-            <a href="#" className="header-logo"><h1>{props.headerText}</h1></a>
+            <div className="grid-container centered">
+                <a href="#" className="header-logo"><h1>{props.headerText}</h1></a>
+            </div>
         </div>
     );
 }
