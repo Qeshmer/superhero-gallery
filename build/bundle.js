@@ -58,13 +58,13 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Gallery = __webpack_require__(173);
-
-	var _Gallery2 = _interopRequireDefault(_Gallery);
-
-	var _SearchBar = __webpack_require__(174);
+	var _SearchBar = __webpack_require__(173);
 
 	var _SearchBar2 = _interopRequireDefault(_SearchBar);
+
+	var _Gallery = __webpack_require__(174);
+
+	var _Gallery2 = _interopRequireDefault(_Gallery);
 
 	var _Footer = __webpack_require__(175);
 
@@ -82,14 +82,14 @@
 	        return {
 	            loading: true,
 	            photos: [],
-	            searchTerm: "marvel"
+	            searchTerm: null
 	        };
 	    },
-	    componentDidMount: function componentDidMount() {
+	    retrieveImages: function retrieveImages() {
 	        var xhr = new XMLHttpRequest();
 	        var flickrApiKey = "1020fa4e42882ee2e1a144a48e55499d";
 	        var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=1&tags=" + this.state.searchTerm + "&per_page=10&api_key=" + flickrApiKey + "&format=json&nojsoncallback=1";
-
+	        console.log(flickrAPI);
 	        xhr.onreadystatechange = function () {
 	            if (xhr.readyState === 4 && xhr.status === 200) {
 	                var data = JSON.parse(xhr.responseText);
@@ -104,8 +104,17 @@
 	        xhr.open("GET", flickrAPI);
 	        xhr.send();
 	    },
-	    searchImages: function searchImages(event) {
-	        console.log(event);
+	    componentDidMount: function componentDidMount() {
+	        this.retrieveImages();
+	    },
+	    searchImages: function searchImages(text) {
+	        this.setState({
+	            loading: true,
+	            photos: [],
+	            searchTerm: text
+	        }, function () {
+	            this.retrieveImages();
+	        });
 	    },
 	    renderLoading: function renderLoading() {
 	        return _react2.default.createElement(
@@ -21623,11 +21632,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Gallery = _react2.default.createClass({
-	    displayName: "Gallery",
+	var SearchBar = _react2.default.createClass({
+	    displayName: "SearchBar",
 
 	    propTypes: {
-	        photos: _react2.default.PropTypes.array.isRequired
+	        searchButtonClicked: _react2.default.PropTypes.func.isRequired
+	    },
+	    searchButtonClicked: function searchButtonClicked() {
+	        var searchValue = this.refs.searchTerm.value;
+	        this.props.searchButtonClicked(searchValue);
 	    },
 	    render: function render() {
 	        return _react2.default.createElement(
@@ -21635,35 +21648,27 @@
 	            { className: "grid-container" },
 	            _react2.default.createElement(
 	                "div",
-	                { className: "image-gallery" },
-	                this.props.photos.map(function (photo, index) {
-	                    return _react2.default.createElement(Image, { url: "https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg", key: index });
-	                })
+	                { className: "search-wrapper centered" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "search-text column-12 medium-6" },
+	                    _react2.default.createElement("input", { ref: "searchTerm", type: "text", placeholder: "Search images here" })
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "search-button" },
+	                    _react2.default.createElement(
+	                        "button",
+	                        { onClick: this.searchButtonClicked },
+	                        "Search"
+	                    )
+	                )
 	            )
 	        );
 	    }
 	});
 
-	var Image = _react2.default.createClass({
-	    displayName: "Image",
-
-	    propTypes: {
-	        url: _react2.default.PropTypes.string.isRequired
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            "a",
-	            { className: "image-link column-4 medium-3", href: "#" },
-	            _react2.default.createElement(
-	                "div",
-	                { className: "inner-wrapper" },
-	                _react2.default.createElement("img", { src: this.props.url, alt: "" })
-	            )
-	        );
-	    }
-	});
-
-	exports.default = Gallery;
+	exports.default = SearchBar;
 
 /***/ },
 /* 174 */
@@ -21683,37 +21688,34 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _Photo = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Photo.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var _Photo2 = _interopRequireDefault(_Photo);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function SearchBar(props) {
-	    return _react2.default.createElement(
-	        "div",
-	        { className: "grid-container" },
-	        _react2.default.createElement(
-	            "div",
-	            { className: "search-wrapper centered" },
-	            _react2.default.createElement(
-	                "div",
-	                { className: "search-text column-12 medium-6" },
-	                _react2.default.createElement("input", { type: "text", placeholder: "Search images here" })
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "search-button" },
-	                _react2.default.createElement(
-	                    "button",
-	                    { onClick: props.searchButtonClicked },
-	                    "Search"
-	                )
-	            )
-	        )
-	    );
-	}
-	SearchBar.propTypes = {
-	    searchButtonClicked: _react2.default.PropTypes.func.isRequired
-	};
+	var Gallery = _react2.default.createClass({
+	    displayName: "Gallery",
 
-	exports.default = SearchBar;
+	    propTypes: {
+	        photos: _react2.default.PropTypes.array.isRequired
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            "div",
+	            { className: "grid-container" },
+	            _react2.default.createElement(
+	                "div",
+	                { className: "image-gallery" },
+	                this.props.photos.map(function (photo, index) {
+	                    return _react2.default.createElement(_Photo2.default, { url: "https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg", key: index });
+	                })
+	            )
+	        );
+	    }
+	});
+
+	exports.default = Gallery;
 
 /***/ },
 /* 175 */

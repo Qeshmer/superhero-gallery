@@ -4,8 +4,8 @@ import ReactDOM from "react-dom";
 
 //React components
 import Header from "./components/Header.js";
-import Gallery from "./components/Gallery.js";
 import SearchBar from "./components/SearchBar.js";
+import Gallery from "./components/Gallery.js";
 import Footer from "./components/Footer.js";
 
 //Styles
@@ -18,14 +18,13 @@ var Application = React.createClass({
         return {
           loading : true,
           photos : [],
-          searchTerm : "marvel"
+          searchTerm : null
         };
     },
-    componentDidMount: function() {
+    retrieveImages : function() {
         var xhr = new XMLHttpRequest();
         var flickrApiKey = "1020fa4e42882ee2e1a144a48e55499d";
         var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=1&tags=" + this.state.searchTerm + "&per_page=10&api_key=" + flickrApiKey + "&format=json&nojsoncallback=1";
-
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var data = JSON.parse(xhr.responseText)
@@ -40,8 +39,17 @@ var Application = React.createClass({
         xhr.open("GET", flickrAPI);
         xhr.send();
     },
-    searchImages: function(event) {
-        console.log(event);
+    componentDidMount: function() {
+        this.retrieveImages();
+    },
+    searchImages: function(text) {
+        this.setState({
+            loading : true,
+            photos : [],
+            searchTerm : text
+        }, function() {
+            this.retrieveImages();
+        });
     },
     renderLoading : function() {
         return (
