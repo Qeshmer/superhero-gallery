@@ -10,10 +10,14 @@
     padding-top: 25px;
     padding-bottom: 30px;
     position: relative;
-    min-height: 300px;
+}
+[class*="medium"],
+[class*="column"] {
+    display: inline-block;
+    vertical-align: top;
 }
 
-.medium-1 {
+.column-1 {
     width: 8.33333%;
 }
 .column-2 {

@@ -9,6 +9,7 @@ body {
     background-color: $color-off-white;
 }
 .loader-container {
+    min-height: 300px;
     .loader {
         position: absolute;
         top: 50%;

@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-
 var Gallery = React.createClass({
     propTypes : {
         photos : React.PropTypes.array.isRequired
     },
     render : function() {
         return (
-            <div className="image-gallery">
-                <div className="grid-container">
+            <div className="grid-container">
+                <div className="image-gallery">
                     {this.props.photos.map(function(photo, index) {
                         return (
                             <Image url= {"https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg"} key={index} />
