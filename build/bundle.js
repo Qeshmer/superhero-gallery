@@ -66,11 +66,11 @@
 
 	var _Gallery2 = _interopRequireDefault(_Gallery);
 
-	var _Footer = __webpack_require__(175);
+	var _Footer = __webpack_require__(176);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	__webpack_require__(176);
+	__webpack_require__(177);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -89,7 +89,6 @@
 	        var xhr = new XMLHttpRequest();
 	        var flickrApiKey = "1020fa4e42882ee2e1a144a48e55499d";
 	        var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=1&tags=" + this.state.searchTerm + "&per_page=10&api_key=" + flickrApiKey + "&format=json&nojsoncallback=1";
-	        console.log(flickrAPI);
 	        xhr.onreadystatechange = function () {
 	            if (xhr.readyState === 4 && xhr.status === 200) {
 	                var data = JSON.parse(xhr.responseText);
@@ -21640,6 +21639,7 @@
 	    },
 	    searchButtonClicked: function searchButtonClicked() {
 	        var searchValue = this.refs.searchTerm.value;
+	        if (searchValue === "") searchValue = null;
 	        this.props.searchButtonClicked(searchValue);
 	    },
 	    render: function render() {
@@ -21688,7 +21688,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Photo = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Photo.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _Photo = __webpack_require__(175);
 
 	var _Photo2 = _interopRequireDefault(_Photo);
 
@@ -21706,6 +21706,12 @@
 	            { className: "grid-container" },
 	            _react2.default.createElement(
 	                "div",
+	                { className: "results-count" },
+	                this.props.photos.length,
+	                " photos found."
+	            ),
+	            _react2.default.createElement(
+	                "div",
 	                { className: "image-gallery" },
 	                this.props.photos.map(function (photo, index) {
 	                    return _react2.default.createElement(_Photo2.default, { url: "https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg", key: index });
@@ -21714,11 +21720,55 @@
 	        );
 	    }
 	});
-
 	exports.default = Gallery;
 
 /***/ },
 /* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(34);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Photo = _react2.default.createClass({
+	    displayName: "Photo",
+
+	    propTypes: {
+	        url: _react2.default.PropTypes.string.isRequired
+	    },
+	    enlarge: function enlarge(event) {
+	        event.preventDefault();
+	        console.log(event.target);
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            "a",
+	            { onClick: this.enlarge, className: "image-link column-4 medium-3", href: "#" },
+	            _react2.default.createElement(
+	                "div",
+	                { className: "inner-wrapper" },
+	                _react2.default.createElement("img", { src: this.props.url, alt: "" })
+	            )
+	        );
+	    }
+	});
+
+	exports.default = Photo;
+
+/***/ },
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21753,16 +21803,16 @@
 	exports.default = Footer;
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(177);
+	var content = __webpack_require__(178);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(179)(content, {});
+	var update = __webpack_require__(180)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21779,10 +21829,10 @@
 	}
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(178)();
+	exports = module.exports = __webpack_require__(179)();
 	// imports
 
 
@@ -21793,7 +21843,7 @@
 
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21848,7 +21898,7 @@
 	};
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
