@@ -49,6 +49,8 @@
 .column-12 {
     width: 100%;
 }
-[class*="column"] {
-    padding: 5px;
+@media screen and (min-width: $large) {
+    [class*="column"] {
+        padding: 5px;
+    }
 }
