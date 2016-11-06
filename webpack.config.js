@@ -14,7 +14,7 @@ var webpackConfig = {
 				test: /\.js$/
 			},
 			{
-				loaders: ["style-loader", "css-loader", "sass-loader"],
+				loaders: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
 				test: /\.scss$/
 			}
 		]
@@ -22,7 +22,7 @@ var webpackConfig = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: "src/index.ejs"
-		})
+		}),
 	]
 };
 

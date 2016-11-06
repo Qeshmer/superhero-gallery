@@ -4,43 +4,12 @@ import ReactDOM from "react-dom";
 
 //React components
 import Header from "./components/Header.js";
+import Gallery from "./components/Gallery.js";
+import Footer from "./components/Footer.js";
 
 //Styles
 import "./scss/main.scss";
 
-function Image(props) {
-
-    return (
-        <a className="image-link column-4" href="#">
-            <div className="inner-wrapper">
-                <img src={props.url} alt="" />
-            </div>
-        </a>
-    );
-}
-Image.propTypes = {
-    url : React.PropTypes.string.isRequired
-};
-
-
-var Gallery = React.createClass({
-    propTypes : {
-        photos : React.PropTypes.array.isRequired
-    },
-    render : function() {
-        return (
-            <div className="image-gallery">
-                <div className="grid-container">
-                    {this.props.photos.map(function(photo, index) {
-                        return (
-                            <Image url= {"https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg"} key={index} />
-                        );
-                    })}
-                </div>
-            </div>
-        );
-    }
-});
 
 var Application = React.createClass({
 
@@ -62,20 +31,42 @@ var Application = React.createClass({
                 var data = JSON.parse(xhr.responseText)
                 var photoResult = data.photos.photo;
 
-                this.setState({ photos: photoResult });
+                this.setState({
+                    photos: photoResult,
+                    loading: false
+                });
             }
         }.bind(this);
         xhr.open("GET", flickrAPI);
         xhr.send();
     },
-    render: function() {
+    renderLoading : function() {
+        return (
+            <div className="site-wrapper">
+                <Header headerText="Superhero Gallery" />
+                <section className="block">
+                    <div className="loader-container">
+                        <span className="loader"></span>
+                    </div>
+                </section>
+                <Footer />
+            </div>
+        );
+    },
+    renderGallery : function() {
         return (
             <div className="site-wrapper">
                 <Header headerText="Superhero Gallery" />
                 <section className="block">
                     <Gallery photos={this.state.photos}/>
                 </section>
+                <Footer />
             </div>
+        );
+    },
+    render: function() {
+        return (
+            this.state.loading ? this.renderLoading() : this.renderGallery()
         );
     }
 });
