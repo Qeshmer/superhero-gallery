@@ -21748,14 +21748,10 @@
 	    propTypes: {
 	        url: _react2.default.PropTypes.string.isRequired
 	    },
-	    enlarge: function enlarge(event) {
-	        event.preventDefault();
-	        console.log(event.target);
-	    },
 	    render: function render() {
 	        return _react2.default.createElement(
 	            "a",
-	            { onClick: this.enlarge, className: "image-link column-4 medium-3", href: "#" },
+	            { className: "image-link column-4 medium-3", href: "#" },
 	            _react2.default.createElement(
 	                "div",
 	                { className: "inner-wrapper" },
